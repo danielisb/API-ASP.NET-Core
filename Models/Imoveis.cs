@@ -14,16 +14,14 @@ namespace challenge_OLX.Models
 
         // public string Title { get; set; }
 
-        public int usableAreas { get; set; }
-        public string listingType { get; set; }
-        public string createdAt { get; set; }
-
-
+        public int    usableAreas   { get; set; }
+        public string listingType   { get; set; }
+        public string createdAt     { get; set; }
         public string listingStatus { get; set; }
-        public string id { get; set; }
-        public int parkingSpaces { get; set; }
-        public string updatedAt { get; set; }
-        public bool owner { get; set; }
+        public string id            { get; set; }
+        public int    parkingSpaces { get; set; }
+        public string updatedAt     { get; set; }
+        public bool   owner         { get; set; }
 
         //public List<string> images        { get; set; }
 
@@ -39,8 +37,13 @@ namespace challenge_OLX.Models
         //            public float lat { get; set; }
         //}; //
 
-        public int bathrooms { get; set; }
-        public int bedrooms { get; set; }
+        public int    bathrooms     { get; set; }
+        public int    bedrooms      { get; set; }
+
+        public static implicit operator Imoveis(char v)
+        {
+            throw new NotImplementedException();
+        }
 
         // pricingInfos
         //public double yearlyIptu     { get; set; }

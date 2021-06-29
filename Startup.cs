@@ -22,12 +22,14 @@ namespace challenge_OLX
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        // --------------------------
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -38,81 +40,50 @@ namespace challenge_OLX
             services.AddMvc();
         }
 
-        //public class Imovel
-        //{
-        //    public int          usableAreas   { get; set; }
-        //    public string       listingType   { get; set; }
-        //    public string       createdAt     { get; set; }
+        // --------------------------
 
-
-        //    public string listingStatus { get; set; }
-        //    public string id { get; set; }
-        //    public int parkingSpaces { get; set; }
-        //    public string updatedAt { get; set; }
-        //    public bool owner { get; set; }
-
-        //    //public List<string> images        { get; set; }
-
-        //    //public struct Adress // ?
-        //    //{
-        //    //    public string City         { get; set; }
-        //    //    public string neighborhood { get; set; }
-        //    //    // geoLocation
-
-        //    //        public string precision { get; set; }
-        //    //        // location
-        //    //            public float lon { get; set; }
-        //    //            public float lat { get; set; }
-        //    //}; //
-
-        //    public int bathrooms { get; set; }
-        //    public int bedrooms { get; set; }
-
-        //    // pricingInfos
-        //    //public double yearlyIptu     { get; set; }
-        //    //public double price          { get; set; }
-        //    //public string businessType   { get; set; }
-        //    //public float monthlyCondoFee { get; set; }
-
-        //}
-
-        public string LoadJson()
+        public string LoadJsonFile()
         {
             WebClient client = new WebClient();
-            
             string json = client.DownloadString("http://grupozap-code-challenge.s3-website-us-east-1.amazonaws.com/sources/source-2.json");
-          
             return json;
-            
         }
+
+        // --------------------------
+
+        public string JsonDeserializer(string json)
+        {
+            var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Imoveis>>(json);
+            return obj.ToString();
+        }
+
+        // --------------------------
+
+        public void SaveImovel(string imovelobj, IServiceProvider serviceProvider)
+        {
+            Imoveis unitImovel;
+            Imoveis imovel = new Imoveis();
+            var context = serviceProvider.GetService<DataContext>();
+            
+            foreach (var item in imovelobj)
+            {
+                unitImovel = item;
+                context.Imoveis.Add(unitImovel);
+                context.SaveChanges();
+            }
+        }
+
+        // --------------------------
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
-            string json = LoadJson();
+            string  json       = LoadJsonFile();
+            string  imovelobj  = JsonDeserializer(json);
+            
+            SaveImovel(imovelobj, serviceProvider);
 
-            var objImovel = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Imoveis>>(json);
-
-            //Imoveis unitimovel = new Imoveis();
-
-            //var context = app.ApplicationServices.GetService<DataContext>();
-            var context = serviceProvider.GetService<DataContext>();
-
-            //List<Imoveis> listImovel = new List<Imoveis>();
-            Imoveis unitImovel = new Imoveis();
-
-            //unitimovel = context[1];
-
-            //context.Imoveis.Add(listImovel[1]);
-            //context.SaveChanges(); //Async
-
-            foreach (var item in objImovel)
-            {
-                unitImovel = item;
-
-                context.Imoveis.Add(unitImovel);
-                context.SaveChanges(); //Async
-            }
+            // -----------
 
             if (env.IsDevelopment())
             {
@@ -120,11 +91,8 @@ namespace challenge_OLX
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
