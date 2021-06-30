@@ -1,9 +1,9 @@
 ﻿<Properties StartupConfiguration="{577AE2E6-E0FE-45A7-B8D2-C55FDEBC6E6A}|Default">
   <MonoDevelop.Ide.ItemProperties.challenge-OLX PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Models/Imoveis.cs">
     <Files>
-      <File FileName="Startup.cs" Line="113" Column="1" />
-      <File FileName="Controllers/ImoveisController.cs" Line="17" Column="1" />
+      <File FileName="Startup.cs" Line="1" Column="1" />
+      <File FileName="Controllers/ImoveisController.cs" Line="21" Column="1" />
       <File FileName="Data/DataContext.cs" Line="11" Column="1" />
       <File FileName="Models/Imoveis.cs" Line="9" Column="38" />
       <File FileName="Program.cs" Line="16" Column="1" />
@@ -15,8 +15,9 @@
             <Node name="challenge-OLX" expanded="True">
               <Node name="Controllers" expanded="True" />
               <Node name="Data" expanded="True" />
-              <Node name="Models" expanded="True" />
-              <Node name="Program.cs" selected="True" />
+              <Node name="Models" expanded="True">
+                <Node name="Imoveis.cs" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>
@@ -29,9 +30,7 @@
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/daniellisboa/Projects/challenge-OLX/Controllers/ImoveisController.cs" relfile="Controllers/ImoveisController.cs" line="16" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

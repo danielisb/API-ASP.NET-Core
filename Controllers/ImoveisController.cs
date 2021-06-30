@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using challenge_OLX.Data;
 using challenge_OLX.Models;
+using System.Linq;
+using System;
+using System.Net;
+using static System.Net.WebRequestMethods;
 
 namespace challenge_OLX.Controllers
 {
@@ -13,28 +17,19 @@ namespace challenge_OLX.Controllers
     {
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult<List<Imoveis>>> Get([FromServices] DataContext context)
+        public async Task<ActionResult<List<Imoveis>>> Get([FromServices] DataContext context, int pageNumber=1, int totalCount=10)
         {
-            var imoveis = await context.Imoveis.ToListAsync();
-            return imoveis;
-        }
+            int pageSize = (int)System.Math.Ceiling(context.Imoveis.Count() / Convert.ToDecimal(totalCount));
 
-        [HttpPost]
-        [Route("")]
-        public async Task<ActionResult<Imoveis>> Post(
-            [FromServices] DataContext context,
-            [FromBody]Imoveis model)
-        {
-            if (ModelState.IsValid)
-            {
-                context.Imoveis.Add(model);
-                await context.SaveChangesAsync();
-                return model;
-            }
-            else
-            {
-                return BadRequest(ModelState);
-            }
+            if (pageNumber < pageSize) Response.Headers.Add("X-Pages-NextPages", Url.Link("DefaultApi", new { pageNumber = pageNumber + 1, tamanhoPagina = totalCount }));
+                Response.Headers.Add("X-Pages-TotalPages", pageSize.ToString());
+                
+
+            var imoveis = await context.Imoveis.OrderBy(i => i.id)
+                                               .Skip(pageSize * (pageNumber - 1))
+                                               .Take(pageSize)
+                                               .ToListAsync();
+            return imoveis;
         }
     }
 }

@@ -35,7 +35,7 @@ namespace challenge_OLX.Models
         //        // location
         //            public float lon { get; set; }
         //            public float lat { get; set; }
-        //}; //
+        //};
 
         public int    bathrooms     { get; set; }
         public int    bedrooms      { get; set; }
@@ -50,6 +50,5 @@ namespace challenge_OLX.Models
         //public double price          { get; set; }
         //public string businessType   { get; set; }
         //public float monthlyCondoFee { get; set; }
-
     }
 }

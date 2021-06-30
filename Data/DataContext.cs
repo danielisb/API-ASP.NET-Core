@@ -11,5 +11,6 @@ namespace challenge_OLX.Data
         }
 
         public DbSet<Imoveis> Imoveis { get; set; }
+        public object Response { get; internal set; }
     }
 }

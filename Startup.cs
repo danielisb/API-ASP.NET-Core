@@ -35,9 +35,7 @@ namespace challenge_OLX
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext> (opt => opt.UseInMemoryDatabase("Database"));
-            services.AddScoped<DataContext, DataContext>();
             services.AddControllers();
-            services.AddMvc();
         }
 
         // --------------------------
@@ -51,25 +49,29 @@ namespace challenge_OLX
 
         // --------------------------
 
-        public string JsonDeserializer(string json)
+        public List<Imoveis> JsonDeserializer(string json)
         {
+            List<Imoveis> listImovel = new List<Imoveis>();
             var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Imoveis>>(json);
-            return obj.ToString();
+            listImovel = obj;
+            return listImovel;
         }
 
         // --------------------------
 
-        public void SaveImovel(string imovelobj, IServiceProvider serviceProvider)
+        public void SaveImovel(List<Imoveis> imovelobj, IServiceProvider serviceProvider)
         {
             Imoveis unitImovel;
-            Imoveis imovel = new Imoveis();
             var context = serviceProvider.GetService<DataContext>();
-            
+
             foreach (var item in imovelobj)
             {
                 unitImovel = item;
                 context.Imoveis.Add(unitImovel);
-                context.SaveChanges();
+                context.SaveChangesAsync();
+
+                foreach (var entity in context.ChangeTracker.Entries())
+                    entity.State = EntityState.Detached;
             }
         }
 
@@ -78,9 +80,8 @@ namespace challenge_OLX
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
-            string  json       = LoadJsonFile();
-            string  imovelobj  = JsonDeserializer(json);
-            
+            string  json = LoadJsonFile();
+            List<Imoveis> imovelobj = JsonDeserializer(json);
             SaveImovel(imovelobj, serviceProvider);
 
             // -----------
