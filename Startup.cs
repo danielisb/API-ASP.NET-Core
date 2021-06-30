@@ -52,8 +52,7 @@ namespace challenge_OLX
         public List<Imoveis> JsonDeserializer(string json)
         {
             List<Imoveis> listImovel = new List<Imoveis>();
-            var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Imoveis>>(json);
-            listImovel = obj;
+            listImovel = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Imoveis>>(json);
             return listImovel;
         }
 
