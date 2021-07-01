@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace challenge_OLX.Models
@@ -6,13 +7,9 @@ namespace challenge_OLX.Models
     public class Imoveis
     {
         [Key]
-        //public int Id { get; set; }
-
         [Required(ErrorMessage = "Este campo é obrigatório")]
         [MaxLength(60, ErrorMessage = "Este campo deve conter entre 3 e 60 caracteres")]
         [MinLength(3, ErrorMessage = "Este campo deve conter entre 3 e 60 caracteres")]
-
-        // public string Title { get; set; }
 
         public int    usableAreas   { get; set; }
         public string listingType   { get; set; }
@@ -23,19 +20,7 @@ namespace challenge_OLX.Models
         public string updatedAt     { get; set; }
         public bool   owner         { get; set; }
 
-        //public List<string> images        { get; set; }
-
-        //public struct Adress // ?
-        //{
-        //    public string City         { get; set; }
-        //    public string neighborhood { get; set; }
-        //    // geoLocation
-
-        //        public string precision { get; set; }
-        //        // location
-        //            public float lon { get; set; }
-        //            public float lat { get; set; }
-        //};
+        public pricingInfos pricingInfos { get; set; }
 
         public int    bathrooms     { get; set; }
         public int    bedrooms      { get; set; }
@@ -44,11 +29,21 @@ namespace challenge_OLX.Models
         {
             throw new NotImplementedException();
         }
+    }
 
-        // pricingInfos
-        //public double yearlyIptu     { get; set; }
-        //public double price          { get; set; }
-        //public string businessType   { get; set; }
-        //public float monthlyCondoFee { get; set; }
+    public class pricingInfos
+    {
+        public Guid   id               { get; set; }
+        public string period           { get; set; }
+        public double yearlyIptu       { get; set; }
+        public double price            { get; set; }
+        public double rentalTotalPrice { get; set; }
+        public string businessType     { get; set; }
+        public float  monthlyCondoFee  { get; set; }
+
+        public pricingInfos()
+        {
+            this.id = Guid.NewGuid();
+        }
     }
 }

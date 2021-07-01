@@ -31,16 +31,16 @@ namespace challenge_OLX
 
         // --------------------------
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services) // conectar com database em memória
         {
             services.AddDbContext<DataContext> (opt => opt.UseInMemoryDatabase("Database"));
+            services.AddScoped<DataContext, DataContext>();
             services.AddControllers();
         }
 
         // --------------------------
 
-        public string LoadJsonFile()
+        public string LoadJsonFile() // ler arquivo json
         {
             WebClient client = new WebClient();
             string json = client.DownloadString("http://grupozap-code-challenge.s3-website-us-east-1.amazonaws.com/sources/source-2.json");
@@ -49,7 +49,7 @@ namespace challenge_OLX
 
         // --------------------------
 
-        public List<Imoveis> JsonDeserializer(string json)
+        public List<Imoveis> JsonDeserializer(string json) // deserializar objeto json e o colocar em um novo objeto (Imoveis)
         {
             List<Imoveis> listImovel = new List<Imoveis>();
             listImovel = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Imoveis>>(json);
@@ -58,7 +58,7 @@ namespace challenge_OLX
 
         // --------------------------
 
-        public void SaveImovel(List<Imoveis> imovelobj, IServiceProvider serviceProvider)
+        public void SaveImovel(List<Imoveis> imovelobj, IServiceProvider serviceProvider) // percorre a lista de objetos de Imovel e salva em memória
         {
             Imoveis unitImovel;
             var context = serviceProvider.GetService<DataContext>();
@@ -76,8 +76,7 @@ namespace challenge_OLX
 
         // --------------------------
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider) // adcionado parâmetro serviceProvider (necessário para conexão com Imoveis)
         {
             string  json = LoadJsonFile();
             List<Imoveis> imovelobj = JsonDeserializer(json);
