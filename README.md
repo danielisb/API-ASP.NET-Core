@@ -14,7 +14,7 @@ O projeto contém uma API backend, com ASP.NET Core. Dada uma request, a mesma r
 * Git
 <br>
 
-**Pacotes usados**
+**Pacotes utilizados**
 
 * Microsoft.EntityFrameworkCore.InMemory
 * Newtonsoft.Json
