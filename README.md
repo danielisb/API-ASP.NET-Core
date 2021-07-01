@@ -1,8 +1,10 @@
 ## API (backend)
 
-O projeto contém uma API backend, com ASP.NET Core. Dada uma request, a mesma retorna uma lista de objetos, desserializada de um arquivo json. O carregamento da response (lista dos objetos) contém um controle de listagem de metadados de paginação.
+O projeto contém uma API backend, com ASP.NET Core.
+Dada uma request, é retornado uma lista de objetos desserializada de um arquivo json. O carregamento da response (lista dos objetos) contém um controle de listagem de metadados de paginação.
 
 ![arquitetura](imagens/arquitetura.png?raw=true "")
+
 <br>
 
 **Ferramentas utilizadas**
@@ -47,11 +49,11 @@ O projeto contém uma API backend, com ASP.NET Core. Dada uma request, a mesma r
 <br>
 
 #### Executar projeto localmente
-1. Execute o projeto no VisualStudio e aguarde o browser abra a janela: 
+1. Execute o projeto no VisualStudio e aguarde até que o browser abra a janela: 
 	https://localhost:5001/swagger
-2. Abra o Postman e faça uma requisição **Get** com o link:
+2. Abra o Postman e faça uma requisição **Get** contendo o endereço:
 	https://localhost:5001/v1/imoveis?idportal=zap
-3. A imagem abaixo mostra o resultado da response:
+3. Na imagem abaixo, temos o resultado da response:
 
 	![resultados-Postman](imagens/resultados-Postman.jpg?raw=true "")
 
