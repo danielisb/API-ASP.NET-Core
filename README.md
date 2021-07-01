@@ -35,20 +35,21 @@ Dada uma request, é retornado uma lista de objetos desserializada de um arquivo
 	Utilizado o pacote Newtonsoft.Json;
 	Método responsável: **JsonDeserializer()**;
 
-4. Entity framework
+4. Entity framework:
 	Utilizado o pacote Microsoft.EntityFrameworkCore.InMemory;
 	Método utilizado: **SaveImovel()**;
 
 5. Metadados de Paginação:
 	Requisição [HttpGet];
-	lógica desenvolvida no método **GetByPortal()**;
+	Lógica desenvolvida no método **GetByPortal()**;
 
-6. Regra de negócio.
+6. Regra de negócio:
 	Requisição [HttpGet];
-	lógica desenvolvida no método **GetByPortal()**;
+	Lógica desenvolvida no método **GetByPortal()**;
+
 <br>
 
-#### Executar projeto localmente
+#### Executando projeto localmente
 1. Execute o projeto no VisualStudio e aguarde até que o browser abra a janela: 
 	https://localhost:5001/swagger
 2. Abra o Postman e faça uma requisição **Get** contendo o endereço:
